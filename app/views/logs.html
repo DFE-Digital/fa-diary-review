@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+Example of using variables in pages
+{% endblock %}
+
+{% block beforeContent %}
+{% include "includes/breadcrumb_examples.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% for item in logs %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-l">{{ item.subject }}</h2>
+  </div>
+  <div class="govuk-grid-column-one-half" style="text-align: right;">
+    <p>{{ item.timestamp }}</p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    
+    {% for event in item.answers %}
+    <h3 class="govuk-heading-m">{{ event.heading }}</h3>
+
+    <table class="govuk-table">
+      {% for question in event.questions %}
+      <tr class="govuk-table__row"></tr>
+      <th style="width:40%;text-align: left;">{{ question.label }}</th>
+      <td class="govuk-table__cell" style="width:60%">{{ question.human_value }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endfor %}
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
