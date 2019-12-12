@@ -11,7 +11,7 @@ module.exports.saveToFile = (filePath, jsonData) => fs.writeFileSync(filePath, J
 
 module.exports.loadFromUrl = url => {
 
-    const SUBMITTER_API_KEY = process.env.SUBMITTER_API_KEY || 'development'
+    const SUBMITTER_API_KEY = ` :${process.env.SUBMITTER_API_KEY}`.toString('base64')
     const options = {
         headers: {
             'Authorization': `Basic ${SUBMITTER_API_KEY}`
