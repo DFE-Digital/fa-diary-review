@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const data = require('./lib/parse')
+const api = require('./api')
 
 router.get('/logs', function (req, res) {
-    data.getLogs().then(data => {
+    api.getLogs().then(data => {
       res.render('logs', { 'logs': data })
     })
 })
