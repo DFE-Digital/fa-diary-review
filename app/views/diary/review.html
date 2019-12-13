@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block beforeContent %}
+{% include "includes/breadcrumb_review.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-width-container ">
+<form action="/diary/review" id="profileOptions" method="get" class="form">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+                Read a foster child's logs
+            </h1>
+            <span class="govuk-caption-xl">{{ data['child-name'] }}</span>
+        </legend>
+
+
+        <div class="govuk-form-group">
+            <div class="govuk-grid-row govuk-!-margin-bottom-4">
+
+
+                <div class="govuk-grid-column-one-quarter">
+                    <label class="govuk-label" for="topic">
+                        Select topic
+                    </label>
+                    <select class="govuk-select profileSelect" id="topic" name="topic" style="width:100%">
+                        {% for option in topic %}
+                        {% if option.id === selected.topic %}
+                        <option selected value="{{ option.id }}">{{ option.label }}</option>
+                        {% else %}
+                        <option value="{{ option.id }}">{{ option.label }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                <div class="govuk-grid-column-one-quarter">
+                    <label class="govuk-label" for="sub">
+                        Select sub-topic
+                    </label>
+                    <select class="govuk-select profileSelect" name="sub" style="width:100%">
+                        {% for option in sub %}
+                        {% if option.id === selected.sub %}
+                        <option selected value="{{ option.id }}">{{ option.label }}</option>
+                        {% else %}
+                        <option value="{{ option.id }}">{{ option.label }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+                {% for group in options %}
+                <div class="govuk-grid-column-one-quarter">
+                    <label class="govuk-label" for="sort">
+                        Select {{ label }}
+                    </label>
+                    <select class="govuk-select" id="sort" name="sort" style="width:100%">
+                        {% for option in group %}
+                        <option value="{{ option.id }}">{{ option.label }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="govuk-grid-row">
+
+
+                <div class="govuk-grid-column-one-quarter">
+
+                    <label class="govuk-label" for="event-name">
+                        Start date
+                    </label>
+                    <input disabled placeholder="disabled for prototype" class="govuk-input" id="event-name"
+                        name="event-name" type="text">
+                </div>
+
+                <div class="govuk-grid-column-one-quarter">
+
+                        <label class="govuk-label" for="event-name">
+                            End date
+                        </label>
+                        <input disabled placeholder="disabled for prototype" class="govuk-input" id="event-name"
+                            name="event-name" type="text">
+                    </div>
+                    <div class="govuk-grid-column-one-quarter">
+                            <label class="govuk-label" for="event-name">
+                                    &nbsp;
+                                </label>
+                            <button class="govuk-button" data-module="govuk-button" style="width:100%">
+                                Update
+                            </button>
+                        </div>
+            </div>
+
+ 
+
+        </div>
+
+
+    </fieldset>
+
+</form>
+</div>
+
+<div class="govuk-width-container ">
+        <h2 class="govuk-heading-l">Log Summary</h2>
+        <h3 class="govuk-heading-m">Theme during this time frame</h3>
+
+</div>
+
+{% endblock %}

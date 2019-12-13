@@ -4,8 +4,9 @@ const ABOUT = {
     parent: 'auto_value__2',
     child: 'auto_value__1'
 }
+const endpoint = 'http://dfe-fb-submitter.herokuapp.com/submissions'
 
-const extract = (method, file, about) => {
+const getLogs = (method, file, about) => {
     return new Promise(resolve => {
         method(file)
             .then(data => {
@@ -17,4 +18,19 @@ const extract = (method, file, about) => {
     })
 }
 
-module.exports.getLogs = () => extract(dataUtil.loadFromUrl, 'http://dfe-fb-submitter.herokuapp.com/submissions', ABOUT.child)
+const getChildren = (method, file, about) => {
+    return new Promise(resolve => {
+        method(file)
+            .then(data => {
+                resolve(data
+                    .filter(entry => entry.payload.submission.sections[1].questions[0].answer === about)
+                    .map(entry => entry.payload.submission.sections[1].questions[1].human_value.toLowerCase())
+                    .filter((child, index, children) => children.indexOf(child) === index)
+                )
+            })
+    })
+}
+
+module.exports.getLogs = () => getLogs(dataUtil.loadFromUrl, endpoint, ABOUT.child)
+
+module.exports.getChildren = () => getChildren(dataUtil.loadFromUrl, endpoint, ABOUT.child)

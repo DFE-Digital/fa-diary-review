@@ -6,5 +6,8 @@ if (window.console && window.console.info) {
 }
 
 $(document).ready(function () {
+  $('.profileSelect').change(function() {
+    $('#profileOptions').submit()
+  })
   window.GOVUKFrontend.initAll()
 })

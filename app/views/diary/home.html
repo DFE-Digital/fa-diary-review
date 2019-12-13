@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block beforeContent %}
+{% include "includes/breadcrumb_home.html" %}
+{% endblock %}
+
+{% block content %}
+
+<form action="/diary/review" method="post" class="form">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+                Read a foster child's log
+            </h1>
+        </legend>
+
+        <span id="changed-name-hint" class="govuk-hint">
+            Which child's logs would you like to read?
+        </span>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <div class="govuk-radios govuk-form-group">
+                    {% for child in children %}
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="child-name" name="child-name" type="radio"
+                            value="{{ child }}">
+                        <label class="govuk-label govuk-radios__label" for="child-name">
+                            {{ child }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <button class="govuk-button" data-module="govuk-button">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+{% endblock %}
