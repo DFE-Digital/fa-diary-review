@@ -1,8 +1,6 @@
 const fs = require('fs')
 const http = require('http')
 
-console.log('test env var', process.env.TEST_VAR)
-
 module.exports.loadFromFile = filePath => {
     return new Promise((resolve, reject) => {
         return resolve(JSON.parse(fs.readFileSync(filePath, 'utf8')))
@@ -13,8 +11,6 @@ module.exports.saveToFile = (filePath, jsonData) => fs.writeFileSync(filePath, J
 
 module.exports.loadFromUrl = url => {
 
-    console.log('test env var load url', process.env.TEST_VAR)
-
     const SUBMITTER_API_KEY = new Buffer(` :${process.env.SUBMITTER_API_KEY}`).toString('base64')
     const options = {
         headers: {
@@ -22,8 +18,8 @@ module.exports.loadFromUrl = url => {
         }
     }
     return new Promise((resolve, reject) => {
-        http.get(url, options, (req, res) => {
-            console.log('request', req)
+        http.get(url, options, (res) => {
+
             let body = ''
 
             res.on('data', (chunk) => {
@@ -34,7 +30,7 @@ module.exports.loadFromUrl = url => {
                 resolve(JSON.parse(body))
             })
         }).on('error', (e) => {
-            console.log('data.js error', e)
+            console.log(`${url}: error`, e)
             reject(e)
         })
     })
