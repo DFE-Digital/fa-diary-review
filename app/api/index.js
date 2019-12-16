@@ -14,7 +14,7 @@ const getLogs = (method, file, about) => {
                     .filter(entry => entry.payload.submission.sections[1].questions[0].answer === about)
                     .map(entry => new DiaryEntry(entry))
                 )
-            })
+            }).catch(e => console.log('error', e))
     })
 }
 
