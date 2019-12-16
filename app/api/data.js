@@ -11,14 +11,15 @@ module.exports.saveToFile = (filePath, jsonData) => fs.writeFileSync(filePath, J
 
 module.exports.loadFromUrl = url => {
 
-    const SUBMITTER_API_KEY = ` :${process.env.SUBMITTER_API_KEY}`.toString('base64')
+    const SUBMITTER_API_KEY = new Buffer(` :${process.env.SUBMITTER_API_KEY}`).toString('base64')
     const options = {
         headers: {
             'Authorization': `Basic ${SUBMITTER_API_KEY}`
         }
     }
     return new Promise((resolve, reject) => {
-        http.get(url, options, (res) => {
+        http.get(url, options, (req, res) => {
+            console.log('request', req)
             let body = ''
 
             res.on('data', (chunk) => {
@@ -29,6 +30,7 @@ module.exports.loadFromUrl = url => {
                 resolve(JSON.parse(body))
             })
         }).on('error', (e) => {
+            console.log('data.js error', e)
             reject(e)
         })
     })
