@@ -7,116 +7,108 @@
 {% block content %}
 
 <div class="govuk-width-container ">
-<form action="/diary/review" id="profileOptions" method="get" class="form">
+    <h1 class="govuk-heading-xl">
+        Read a foster child's logs<br />{{ data['child-name'] }}
+    </h1>
     <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-            <h1 class="govuk-fieldset__heading">
-                Read a foster child's logs
-            </h1>
-            <span class="govuk-caption-xl">{{ data['child-name'] }}</span>
-        </legend>
+        <div class="govuk-form-group" style="background-color:#f3f2f1;padding:20px">
+            <h2 class="govuk-heading-m">What do you want to read about?</h2>
+            <form action="/review" id="profileOptions" method="get" class="form">
 
+                <div class="govuk-grid-row govuk-!-margin-bottom-4">
 
-        <div class="govuk-form-group">
-            <div class="govuk-grid-row govuk-!-margin-bottom-4">
-
-
-                <div class="govuk-grid-column-one-quarter">
-                    <label class="govuk-label" for="topic">
-                        Select topic
-                    </label>
-                    <select class="govuk-select profileSelect" id="topic" name="topic" style="width:100%">
-                        {% for option in topic %}
-                        {% if option.id === selected.topic %}
-                        <option selected value="{{ option.id }}">{{ option.label }}</option>
-                        {% else %}
-                        <option value="{{ option.id }}">{{ option.label }}</option>
-                        {% endif %}
-                        {% endfor %}
-
-                    </select>
-                </div>
-
-                <div class="govuk-grid-column-one-quarter">
-                    <label class="govuk-label" for="sub">
-                        Select sub-topic
-                    </label>
-                    <select class="govuk-select profileSelect" name="sub" style="width:100%">
-                        {% for option in sub %}
-                        {% if option.id === selected.sub %}
-                        <option selected value="{{ option.id }}">{{ option.label }}</option>
-                        {% else %}
-                        <option value="{{ option.id }}">{{ option.label }}</option>
-                        {% endif %}
-                        {% endfor %}
-
-                    </select>
-                </div>
-
-                {% for group in options %}
-                <div class="govuk-grid-column-one-quarter">
-                    <label class="govuk-label" for="sort">
-                        Select {{ label }}
-                    </label>
-                    <select class="govuk-select" id="sort" name="sort" style="width:100%">
-                        {% for option in group %}
-                        <option value="{{ option.id }}">{{ option.label }}</option>
-                        {% endfor %}
-
-                    </select>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="govuk-grid-row">
-
-
-                <div class="govuk-grid-column-one-quarter">
-
-                    <label class="govuk-label" for="event-name">
-                        Start date
-                    </label>
-                    <input disabled placeholder="disabled for prototype" class="govuk-input" id="event-name"
-                        name="event-name" type="text">
-                </div>
-
-                <div class="govuk-grid-column-one-quarter">
-
-                        <label class="govuk-label" for="event-name">
-                            End date
+                    <div class="govuk-grid-column-one-quarter">
+                        <label class="govuk-label" for="topic">
+                            Choose
                         </label>
-                        <input disabled placeholder="disabled for prototype" class="govuk-input" id="event-name"
-                            name="event-name" type="text">
+                        <select class="govuk-select profileSelect" id="topic" name="topic" style="width:100%">
+                            {% for option in topic %}
+                            {% if option.id === selected.topic %}
+                            <option selected value="{{ option.id }}">{{ option.label }}</option>
+                            {% else %}
+                            <option value="{{ option.id }}">{{ option.label }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    {% if subTopicOptions.length %}
+                    <div class="govuk-grid-column-one-quarter">
+                        <label class="govuk-label" for="sub">
+                            Choose
+                        </label>
+                        <select class="govuk-select profileSelect" name="sub" style="width:100%">
+                            {% for option in subTopicOptions %}
+                            {% if option.id === selected.subOption %}
+                            <option selected value="{{ option.id }}">{{ option.label }}</option>
+                            {% else %}
+                            <option value="{{ option.id }}">{{ option.label }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+
+                    {% for group in radios %}
+                    <div class="govuk-grid-column-one-quarter">
+                        <label class="govuk-label" for="sort">
+                            Choose
+                        </label>
+                        <select class="govuk-select" id="sort" name="sort" style="width:100%">
+                            {% for option in group %}
+                            <option value="{{ option.id }}">{{ option.label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-quarter">
+                        <label class="govuk-label" for="event-name">
+                            From this date
+                        </label>
+                        <input disabled placeholder="6/12/2019" class="govuk-input" id="event-name" name="event-name"
+                            type="text">
+                    </div>
+
+                    <div class="govuk-grid-column-one-quarter">
+                        <label class="govuk-label" for="event-name">
+                            To this date
+                        </label>
+                        <input disabled placeholder="14/12/2019" class="govuk-input" id="event-name" name="event-name"
+                            type="text">
                     </div>
                     <div class="govuk-grid-column-one-quarter">
-                            <label class="govuk-label" for="event-name">
-                                    &nbsp;
-                                </label>
-                            <button class="govuk-button" data-module="govuk-button" style="width:100%">
-                                Update
-                            </button>
-                        </div>
-            </div>
-
- 
-
+                        <label class="govuk-label" for="event-name">
+                            &nbsp;
+                        </label>
+                        <button class="govuk-button" data-module="govuk-button" style="width:100%">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
         </div>
+    </form>
+</div>
 
 
-    </fieldset>
-
-</form>
+<div class="govuk-width-container ">
+    <h2 class="govuk-heading-l">Log Summary</h2>
+    <div class="govuk-form-group" style="background-color:#f3f2f1;padding:20px">
+        <h3 class="govuk-heading-m">Log entry ratings</h3>
+        <div id="chart1" style="width:100%; height:200px"></div>
+    </div>
 </div>
 
 <div class="govuk-width-container ">
-        <h2 class="govuk-heading-l">Log Summary</h2>
-        <h3 class="govuk-heading-m">Theme during this time frame</h3>
-        <div id="chart1" style="width:100%; height:200px;"></div>
-</div>
-
-<div class="govuk-width-container ">
-        <h2 class="govuk-heading-l"></h2>
-        <h3 class="govuk-heading-m">Topics during the time frame</h3>
+    <h2 class="govuk-heading-l"></h2>
+    <div class="govuk-form-group" style="background-color:#f3f2f1;padding:20px">
+        <h3 class="govuk-heading-m">Breakdown of log entries from 6/12/2019 to 14/12/2019</h3>
         <div id="chart2" style="width:100%; height:400px;"></div>
+    </div>
+</div>
+
 </div>
 
 {% endblock %}

@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block beforeContent %}
-{% include "includes/breadcrumb_home.html" %}
+{% include "includes/breadcrumb_select.html" %}
 {% endblock %}
 
 {% block content %}
 
-<form action="/diary/review" method="post" class="form">
+<form action="/review" method="post" class="form">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-fieldset__heading">
@@ -15,7 +15,7 @@
         </legend>
 
         <span id="changed-name-hint" class="govuk-hint">
-            Which child's logs would you like to read?
+            Whose log would you like to read?
         </span>
 
         <div class="govuk-grid-row">

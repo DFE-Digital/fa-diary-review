@@ -9,29 +9,31 @@ router.get('/logs', function (req, res) {
     })
 })
 
-router.get('/diary/home', function (req, res) {
+router.get('/select', function (req, res) {
   api.getChildren().then(data => {
-    res.render('diary/home',  { 'children': data })
+    res.render('diary/select',  { 'children': data })
   })
 })
 
-
-router.get('/diary/review', function (req, res) {
+router.get('/review', function (req, res) {
   const selected = {
     topic: req.query.topic || 'home-life'
   }
-  
-  const sub = require('./data/sub-topics')[selected.topic]
-  
-  selected.sub = sub[0].id
 
-  const optionKeys = require('./data/options')
-  const options = sub.find(s => s.id === selected.sub).options.map(option => optionKeys[option])
+  const subTopic = require('./data/sub-topics')[selected.topic]
+  const subTopicOptions = require('./data/sub-topics')[selected.topic].options || []
+
+  if (subTopicOptions.length) {
+    selected.subOption = subTopicOptions[0].id
+  }
+
+  const radioGroups = require('./data/radios')
+  const radios = subTopic.radios.map(option => radioGroups[option])
 
   res.render('diary/review', {
     topic: require('./data/topics'),
-    sub,
-    options,
+    subTopicOptions,
+    radios,
     selected
   })
   // api.getChildren().then(data => {
