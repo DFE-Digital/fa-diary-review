@@ -11,106 +11,141 @@ $(document).ready(function () {
   })
   window.GOVUKFrontend.initAll()
 
-  var myChart1 = echarts.init(document.getElementById('chart1'));
-  var myChart2 = echarts.init(document.getElementById('chart2'));
+  const urlParams = new URLSearchParams(window.location.search);
+  const childNameParam = urlParams.get('childName');
+  const topicParam = urlParams.get('topic') || 'home-life';
+  const subTopicParam = urlParams.get('subTopic') || 'behaviour';
 
-  myChart1.setOption({
-    color: ['#00703c', '#b1b4b6', '#d4351c'],
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    legend: {
-      data: ['negative', 'neutral', 'positive'],
-      name: 'theme'
-    },
-    xAxis: {
-      show: false
-    },
-    yAxis: {
-      type: 'category',
-      data: ['theme']
-    },
-    series: [
-      {
-        name: 'positive',
-        type: 'bar',
-        stack: true,
-        label: {
-          normal: {
-            show: true,
-            position: 'insideRight'
-          }
-        },
-        data: [4]
-      },
-      {
-        name: 'neutral',
-        type: 'bar',
-        stack: true,
-        label: {
-          normal: {
-            show: true,
-            position: 'insideRight'
-          }
-        },
-        data: [1]
-      },
-      {
-        name: 'negative',
-        type: 'bar',
-        stack: true,
-        label: {
-          normal: {
-            show: true,
-            position: 'insideRight'
-          }
-        },
-        data: [2]
-      }
-    ]
-  });
+  $.ajax('api/logs/breakdown?childName=' + childNameParam).done((breakdown) => {
 
-  myChart2.setOption({
-    series: [{
-      type: 'treemap',
-      data: [{
-        name: 'Home life',
-        value: 10,
-        color: ['#1d70b8', '#003078', '#5694ca', '#4c2c92'],
-        children: [{
-          name: 'behaviour',
-          value: 4
-        }, {
-          name: 'life skills',
-          value: 6
-        }, {
-          name: 'family relationships',
-          value: 6
-        }]
-      }, {
-        name: 'School life',
-        value: 20,
-        color: ['#6f72af', '#912b88', '#d53880', '#f499be'],
-        children: [{
-          name: 'school work',
-          value: 8
-        }, {
-          name: 'attendance',
-          value: 5
-        }, {
-          name: 'behaviour',
-          value: 4
-        }, {
-          name: 'peer relationships',
-          value: 2
-        }, {
-          name: 'other',
-          value: 3
-        }]
+    if (breakdown[topicParam] && breakdown[topicParam][subTopicParam]) {
+
+      var myChart1 = echarts.init(document.getElementById('chart1'));
+
+      myChart1.setOption({
+        color: ['#00703c', '#b1b4b6', '#d4351c'],
+
+        tooltip: {
+          show: true,
+          trigger: 'item',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          data: ['positive', 'neutral', 'negative']
+        },
+        xAxis: {
+          show: false
+        },
+        yAxis: {
+          type: 'category',
+          show: false
+        },
+        series: [
+          {
+            name: 'positive',
+            type: 'bar',
+            stack: true,
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [breakdown[topicParam][subTopicParam].positive]
+          },
+          {
+            name: 'neutral',
+            type: 'bar',
+            stack: true,
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [breakdown[topicParam][subTopicParam].neutral]
+          },
+          {
+            name: 'negative',
+            type: 'bar',
+            stack: true,
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [breakdown[topicParam][subTopicParam].total]
+          }
+        ]
+      })
+    }
+
+
+
+
+    const data = []
+
+    Object.keys(breakdown).forEach(topic => {
+      data.push({
+        name: topic,
+        children: Object.keys(breakdown[topic]).map(subTopic => {
+
+          const params = { topic, subTopic, childName: childNameParam }
+          const paramString = new URLSearchParams(params)
+
+          return {
+            name: `${subTopic} (${breakdown[topic][subTopic].total})`,
+            value: breakdown[topic][subTopic].total,
+            link: `/logs?${paramString.toString()}`
+          }
+        })
+      })
+    })
+
+    var myChart2 = echarts.init(document.getElementById('chart2'));
+
+    myChart2.setOption({
+      series: [{
+        type: 'treemap',
+        roam: 'false',
+        nodeClick: 'link',
+        breadcrumb: {
+          show: false
+        },
+        label: {
+          show: true
+        },
+        width: '100%',
+        data,
+        fontSize: 40,
+        levels: [
+          {
+            itemStyle: {
+              normal: {
+                borderWidth: 0,
+                gapWidth: 10
+              },
+              fontSize: 100
+            }
+          },
+          {
+            itemStyle: {
+              normal: {
+                gapWidth: 1
+              }
+            },
+            color: ['#85994b', '#b58840', '#f47738'],
+            upperLabel: {
+              show: true,
+              color: '#000000',
+              fontWeight: 'bold'
+            }
+          }
+        ]
       }]
-    }]
+    })
   })
 })

@@ -1,19 +1,24 @@
 module.exports = {
-    theme: [
+    theme: {
+        options: [
             {
                 id: 'positive',
                 label: 'Positive'
             },
             {
                 id: 'negative',
-                label: 'Negative'
+                label: 'Concern'
             },
             {
                 id: 'neutral',
                 label: 'Neutral'
             }
         ],
-    direction: [
+        label: 'Choose theme',
+        id: 'theme'
+    },
+    bytowards: {
+        options: [
             {
                 id: 'by',
                 label: 'By my child'
@@ -22,15 +27,22 @@ module.exports = {
                 id: 'towards',
                 label: 'Towards my child'
             }
-    ],
-    police: [
-            {
-                id: 'yes',
-                label: 'Yes'
-            },
+        ],
+        label: 'Initiated',
+        id: 'bytowards'
+    },
+    police: {
+        options: [
             {
                 id: 'no',
                 label: 'No'
+            },
+            {
+                id: 'yes',
+                label: 'Yes'
             }
-        ]
+        ],
+        label: 'Police involved',
+        id: 'police'
+    }
 }

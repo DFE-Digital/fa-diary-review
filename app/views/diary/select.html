@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<form action="/review" method="post" class="form">
+<form action="/review" method="get" class="form">
     <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-fieldset__heading">
@@ -23,10 +23,10 @@
                 <div class="govuk-radios govuk-form-group">
                     {% for child in children %}
                     <div class="govuk-radios__item">
-                        <input class="govuk-radios__input" id="child-name" name="child-name" type="radio"
+                        <input class="govuk-radios__input" id="childName" name="childName" type="radio"
                             value="{{ child }}">
-                        <label class="govuk-label govuk-radios__label" for="child-name">
-                            {{ child }}
+                        <label class="govuk-label govuk-radios__label" for="childName">
+                            <span style="text-transform: capitalize;">{{ child }}</span>
                         </label>
                     </div>
                     {% endfor %}

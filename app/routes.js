@@ -2,29 +2,36 @@ const express = require('express')
 const router = express.Router()
 
 const api = require('./api')
+const Child = require('./api/model/Child')
 
-router.get('/logs', function (req, res) {
-    api.getLogs().then(data => {
-      res.render('logs', { 'logs': data })
+router.get('/logs', (req, res) => {
+  api.getLogsForChild(req.query.childName).then(data => {
+    res.render('diary/logs', {
+      'logs': api.filterLogs(data, {
+        topic: req.query.topic,
+        subTopic: req.query.subTopic
+      })
     })
-})
-
-router.get('/select', function (req, res) {
-  api.getChildren().then(data => {
-    res.render('diary/select',  { 'children': data })
   })
 })
 
-router.get('/review', function (req, res) {
+router.get('/select', (req, res) => {
+  api.getChildren().then(data => {
+    res.render('diary/select', { 'children': data })
+  })
+})
+
+router.get('/review', (req, res) => {
   const selected = {
     topic: req.query.topic || 'home-life'
   }
 
-  const subTopic = require('./data/sub-topics')[selected.topic]
-  const subTopicOptions = require('./data/sub-topics')[selected.topic].options || []
+  const subTopic = require('./data/sub-topics')[selected.topic] || []
 
-  if (subTopicOptions.length) {
-    selected.subOption = subTopicOptions[0].id
+  if (subTopic.options && subTopic.options.findIndex(option => option.id === req.query.subTopic) === -1) {
+    selected.subTopic = subTopic.options[0].id
+  } else {
+    selected.subTopic = req.query.subTopic
   }
 
   const radioGroups = require('./data/radios')
@@ -32,14 +39,17 @@ router.get('/review', function (req, res) {
 
   res.render('diary/review', {
     topic: require('./data/topics'),
-    subTopicOptions,
+    subTopic,
     radios,
     selected
   })
-  // api.getChildren().then(data => {
-  //   console.log(data)
-  //   res.render('child/select',  { 'children': data })
-  // })
+})
+
+router.get('/api/logs/breakdown', (req, res) => {
+  api.getLogsForChild(req.query.childName).then(data => {
+    const child = new Child(data)
+    res.json(child.logsThemeCounts())
+  })
 })
 
 module.exports = router

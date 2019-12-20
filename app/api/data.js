@@ -2,8 +2,8 @@ const fs = require('fs')
 const http = require('http')
 
 module.exports.loadFromFile = filePath => {
-    return new Promise((resolve, reject) => {
-        return resolve(JSON.parse(fs.readFileSync(filePath, 'utf8')))
+    return new Promise(resolve => {
+        return resolve(JSON.parse(fs.readFileSync(process.cwd() + '/' + filePath, 'utf8')))
     })
 }
 
@@ -11,7 +11,7 @@ module.exports.saveToFile = (filePath, jsonData) => fs.writeFileSync(filePath, J
 
 module.exports.loadFromUrl = url => {
 
-    const SUBMITTER_API_KEY = new Buffer(` :14ec61b9634a07265660e88558821a02`).toString('base64')
+    const SUBMITTER_API_KEY = new Buffer(` :${process.env.SUBMITTER_API_KEY}`).toString('base64')
     const options = {
         headers: {
             'Authorization': `Basic ${SUBMITTER_API_KEY}`

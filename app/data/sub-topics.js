@@ -137,42 +137,35 @@ module.exports = {
     radios: ['theme']
   },
   'serious-incident': {
-    radios: ['direction', 'police'],
+    radios: ['bytowards', 'police'],
     options: [
       {
         "id": "missing",
-        "label": "Gone missing",
-        "options": ['direction', 'police']
+        "label": "Gone missing"
       },
       {
         "id": "violent",
-        "label": "Violent behaviour",
-        "options": ['direction', 'police']
+        "label": "Violent behaviour"
       },
       {
         "id": "sexual",
-        "label": "Sexual behaviour",
-        "options": ['direction', 'police']
+        "label": "Sexual behaviour"
       },
       {
         "id": "drugs",
-        "label": "Involved drugs",
-        "options": ['direction', 'police']
+        "label": "Involved drugs"
       },
       {
         "id": "alcohol",
-        "label": "Involved alcohol",
-        "options": ['direction', 'police']
+        "label": "Involved alcohol"
       },
       {
         "id": "gang",
-        "label": "Gang activity",
-        "options": ['direction', 'police']
+        "label": "Gang activity"
       },
       {
         "id": "other",
-        "label": "Other",
-        "options": ['direction', 'police']
+        "label": "Other"
       }
     ]
   }
