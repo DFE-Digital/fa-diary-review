@@ -24,7 +24,7 @@ const getChildren = (method, file, about) => {
         method(file)
             .then(data => {
                 resolve(data
-                    .filter(entry => entry.payload.submission.sections[1].questions[0].answer === about)
+                    .filter(entry => entry.payload.submission.sections[1].questions[0].answer === about.toLowerCase())
                     .map(entry => entry.payload.submission.sections[1].questions[1].human_value.toLowerCase())
                     .filter((child, index, children) => children.indexOf(child) === index)
                 )

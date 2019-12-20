@@ -33,7 +33,7 @@ $(document).ready(function () {
           }
         },
         legend: {
-          data: ['positive', 'neutral', 'negative']
+          data: ['Positive', 'Neutral', 'Concern']
         },
         xAxis: {
           show: false
@@ -44,7 +44,7 @@ $(document).ready(function () {
         },
         series: [
           {
-            name: 'positive',
+            name: 'Positive',
             type: 'bar',
             stack: true,
             label: {
@@ -56,7 +56,7 @@ $(document).ready(function () {
             data: [breakdown[topicParam][subTopicParam].positive]
           },
           {
-            name: 'neutral',
+            name: 'Neutral',
             type: 'bar',
             stack: true,
             label: {
@@ -68,7 +68,7 @@ $(document).ready(function () {
             data: [breakdown[topicParam][subTopicParam].neutral]
           },
           {
-            name: 'negative',
+            name: 'Concern',
             type: 'bar',
             stack: true,
             label: {
@@ -97,7 +97,7 @@ $(document).ready(function () {
           const paramString = new URLSearchParams(params)
 
           return {
-            name: `${subTopic} (${breakdown[topic][subTopic].total})`,
+            name: `${subTopic.charAt(0).toUpperCase() + subTopic.slice(1)} (${breakdown[topic][subTopic].total})`,
             value: breakdown[topic][subTopic].total,
             link: `/logs?${paramString.toString()}`
           }

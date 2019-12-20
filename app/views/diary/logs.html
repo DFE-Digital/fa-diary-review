@@ -9,6 +9,7 @@
     <h1 class="govuk-heading-xl">
         Read a foster child's logs<br /><span style="text-transform: capitalize;">{{ data['childName'] }}</span>
     </h1>
+
 {% for item in logs %}
 {% if item.answers.length %}
 <div class="govuk-grid-row">
@@ -38,5 +39,6 @@
 </div>
 {% endif %}
 {% endfor %}
+
 </div>
 {% endblock %}
