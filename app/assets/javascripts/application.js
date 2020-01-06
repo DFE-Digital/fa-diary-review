@@ -169,7 +169,7 @@ $(document).ready(function () {
           show: true
         },
         width: '100%',
-        data,
+        data: data,
         fontSize: 40,
         levels: [
           {
