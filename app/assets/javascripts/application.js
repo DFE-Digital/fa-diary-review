@@ -136,7 +136,7 @@ $(document).ready(function () {
 
 
 
-    const data = []
+    var data = []
 
     Object.keys(breakdown).forEach(topic => {
       data.push({
