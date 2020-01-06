@@ -143,7 +143,7 @@ $(document).ready(function () {
         name: topic,
         children: Object.keys(breakdown[topic]).map(function(subTopic) {
 
-          var params = { topic, subTopic, childName: childNameParam }
+          var params = { topic: topic, subTopic: subTopic, childName: childNameParam }
           var paramString = new URLSearchParams(params)
 
           return {
