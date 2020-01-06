@@ -138,7 +138,7 @@ $(document).ready(function () {
 
     var data = []
 
-    Object.keys(breakdown).forEach(topic => {
+    Object.keys(breakdown).forEach(function(topic) {
       data.push({
         name: topic,
         children: Object.keys(breakdown[topic]).map(function(subTopic) {
