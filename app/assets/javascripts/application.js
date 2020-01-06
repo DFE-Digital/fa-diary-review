@@ -147,9 +147,9 @@ $(document).ready(function () {
           var paramString = new URLSearchParams(params)
 
           return {
-            name: `${subTopic.charAt(0).toUpperCase() + subTopic.slice(1)} (${breakdown[topic][subTopic].total})`,
+            name: subTopic.charAt(0).toUpperCase() + subTopic.slice(1) + '(' + breakdown[topic][subTopic].total + ')',
             value: breakdown[topic][subTopic].total,
-            link: `/logs?${paramString.toString()}`
+            link: '/logs?' + paramString.toString()
           }
         })
       })
