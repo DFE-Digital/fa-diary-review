@@ -61,12 +61,12 @@ $(document).ready(function () {
   })
   window.GOVUKFrontend.initAll()
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const childNameParam = urlParams.get('childName');
-  const topicParam = urlParams.get('topic') || 'home-life';
-  const subTopicParam = urlParams.get('subTopic') || 'behaviour';
+  var urlParams = new URLSearchParams(window.location.search);
+  var childNameParam = urlParams.get('childName');
+  var topicParam = urlParams.get('topic') || 'home-life';
+  var subTopicParam = urlParams.get('subTopic') || 'behaviour';
 
-  $.ajax('api/logs/breakdown?childName=' + childNameParam).done((breakdown) => {
+  $.ajax('api/logs/breakdown?childName=' + childNameParam).done(function(breakdown) {
 
     if (breakdown[topicParam] && breakdown[topicParam][subTopicParam]) {
 
@@ -141,10 +141,10 @@ $(document).ready(function () {
     Object.keys(breakdown).forEach(topic => {
       data.push({
         name: topic,
-        children: Object.keys(breakdown[topic]).map(subTopic => {
+        children: Object.keys(breakdown[topic]).map(function(subTopic) {
 
-          const params = { topic, subTopic, childName: childNameParam }
-          const paramString = new URLSearchParams(params)
+          var params = { topic, subTopic, childName: childNameParam }
+          var paramString = new URLSearchParams(params)
 
           return {
             name: `${subTopic.charAt(0).toUpperCase() + subTopic.slice(1)} (${breakdown[topic][subTopic].total})`,
